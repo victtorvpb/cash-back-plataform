@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  auth_service:
+    container_name: cash_back_plataform
+    entrypoint: sh run.sh
+    image: container_cash_back_plataform:latest
+    build:
+      context: .
+    environment:
+      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
+    volumes:
+      - ./:/opt/app/cash_back_plataform/
+    external_links:
+      - service.postgres
+    ports:
+      - "5500:5500"
+
+  service.postgres:
+    container_name: cashback_postgres
+    image: postgres
+    volumes:
+      - postgre-data-test:/var/lib/postgresql/data
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_USER=tom
+      - POSTGRES_PASSWORD=tom123
+      - POSTGRES_DB=cashback_postgres
+
+
+volumes:
+    postgre-data-test:
