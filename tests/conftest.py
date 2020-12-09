@@ -1,11 +1,17 @@
 import sys
-sys.path = ['', '..'] + sys.path[1:]  # noqa
+import pytest
+
 
 from typing import Generator
 
-import pytest
+
 from fastapi.testclient import TestClient
-from main import create_app
+from faker import Factory
+from sqlalchemy.orm import Session
+
+sys.path = ['', '..'] + sys.path[1:]
+from commons.db.session import engine  # noqa
+from main import create_app  # noqa
 
 
 @pytest.fixture(scope="module")
@@ -13,3 +19,26 @@ def client() -> Generator:
     app = create_app()
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture(scope="module")
+def faker() -> Generator:
+    return Factory.create('pt_BR')
+
+
+@pytest.fixture(scope="session")
+def db() -> Generator:
+
+    connection = engine.connect()
+    # begin the nested transaction
+    transaction = connection.begin()
+    # use the connection with the already started transaction
+    session = Session(bind=connection)
+
+    yield session
+
+    session.close()
+    # roll back the broader transaction
+    transaction.rollback()
+    # put back the connection to the connection pool
+    connection.close()
