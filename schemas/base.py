@@ -18,7 +18,6 @@ class SchemaBase(PydanticBase):
 
 
 class SchemaInDBBase(SchemaBase):
-    id: int
     uuid: Optional[UUID] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None

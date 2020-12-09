@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 
+from resources.api_v1.api import api_router
 from commons.config import settings
 from schemas.common import Message
 
@@ -29,6 +30,7 @@ def create_app() -> FastAPI:
     async def its_alive():
         return {'status': 'its_alive'}
 
+    app.include_router(api_router, prefix=settings.API_V1_STR)
     return app
 
 
