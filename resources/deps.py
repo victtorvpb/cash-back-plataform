@@ -6,14 +6,9 @@ from jose import jwt
 from pydantic import ValidationError
 from sqlalchemy.orm import Session
 
-
-import models
-import schemas
-import crud
-
-from commons import security
+from commons import models, schemas, crud, utils
 from commons.config import settings
-from db.session import SessionLocal
+from commons.db.session import SessionLocal
 
 reusable_oauth2 = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/login/access-token")
 
@@ -30,7 +25,7 @@ def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(reusable_oauth2)
 ) -> models.User:
     try:
-        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[security.ALGORITHM])
+        payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         token_data = schemas.TokenPayload(**payload)
     except (jwt.JWTError, ValidationError):
         raise HTTPException(

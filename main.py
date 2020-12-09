@@ -4,7 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from resources.api_v1.api import api_router
 from commons.config import settings
-from schemas.common import Message
+from commons.schemas.common import Message
 
 origins = [
     "http://localhost",
@@ -45,3 +45,4 @@ if __name__ == '__main__':
         debug=settings.DEBUG,
         reload=settings.DEBUG,
     )
+

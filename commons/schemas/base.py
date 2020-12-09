@@ -4,7 +4,7 @@ from uuid import UUID
 
 from pydantic import BaseModel
 
-from utils.format import to_camel_case
+from commons.utils.format import to_camel_case
 
 
 class PydanticBase(BaseModel):

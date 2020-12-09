@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import EmailStr, constr
 
-from schemas.base import SchemaBase, SchemaInDBBase, UUID
+from commons.schemas.base import SchemaBase, SchemaInDBBase, UUID
 
 
 class UserBase(SchemaBase):

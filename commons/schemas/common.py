@@ -1,4 +1,4 @@
-from schemas.base import PydanticBase
+from commons.schemas.base import PydanticBase
 
 
 class Message(PydanticBase):

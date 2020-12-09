@@ -24,8 +24,7 @@ pep8:
 	make exec COMMAND="flake8 . --exit-zero"
 
 test:
-	make exec COMMAND="py.test --cov=apps --cov-config .coveragerc"
-	make exec COMMAND="coverage html"
+	make exec COMMAND="pytest"
 
 formatter: pep8
 	make exec COMMAND="black . -S -v -t py38 --exclude '\alembic/' -l 100 "

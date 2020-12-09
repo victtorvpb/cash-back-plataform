@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     HOST: str = '0.0.0.0'
     PORT: int = 5000
     DEBUG: bool = True
+    ALGORITHM: str = 'HS512'
 
     # Database
     SQLALCHEMY_DATABASE_URI: str = os.getenv('SQLALCHEMY_DATABASE_URI')

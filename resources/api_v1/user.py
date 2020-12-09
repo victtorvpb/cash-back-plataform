@@ -1,11 +1,10 @@
-import schemas
-import crud
-
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+
 from resources import deps
+from commons import schemas, crud
 
 
 auth_router = APIRouter()

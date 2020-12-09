@@ -4,10 +4,10 @@ from pydantic import EmailStr
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
-from commons.security import get_password, verify_password
-from crud.base import CRUDBase
-from models.auth.user import User
-from schemas.auth.user import UserCreate
+from commons.utils.security import get_password, verify_password
+from commons.crud.base import CRUDBase
+from commons.models.auth.user import User
+from commons.schemas.auth.user import UserCreate
 
 
 class CRUDUser(CRUDBase[User, UserCreate]):

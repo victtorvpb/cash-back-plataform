@@ -1,3 +1,6 @@
+import sys
+sys.path = ['', '..'] + sys.path[1:]  # noqa
+
 from typing import Generator
 
 import pytest
