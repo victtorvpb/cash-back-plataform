@@ -7,8 +7,11 @@ RUN apt-get update
 RUN apt-get install git gcc python3-dev -y
 RUN apt-get install libsasl2-dev libldap2-dev ldap-utils lcov valgrind libssl-dev libsnmp-dev libpq-dev -y
 
-COPY . /opt/app/cash_back_plataform/
-
 WORKDIR /opt/app/cash_back_plataform/
 
+COPY requirements.txt .
 RUN pip install -r requirements.txt
+
+COPY . /opt/app/cash_back_plataform/
+
+

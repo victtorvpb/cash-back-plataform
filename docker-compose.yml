@@ -1,9 +1,11 @@
 version: '3'
 
 services:
-  auth_service:
+  cash_back_plataform:
     container_name: cash_back_plataform
     entrypoint: sh run.sh
+    tty: true
+    stdin_open: true
     image: container_cash_back_plataform:latest
     build:
       context: .
@@ -14,7 +16,7 @@ services:
     external_links:
       - service.postgres
     ports:
-      - "5500:5500"
+      - "5000:5000"
 
   service.postgres:
     container_name: cashback_postgres
