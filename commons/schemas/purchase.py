@@ -13,7 +13,7 @@ class PusrchaseBase(SchemaBase):
 
 
 class PusrchaseCreate(PusrchaseBase):
-    code: Optional[str]
+    code: str
     value: float
     purchase_date: datetime
     status: str
