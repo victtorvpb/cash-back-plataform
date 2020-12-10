@@ -7,10 +7,9 @@ from typing import Generator
 
 from fastapi.testclient import TestClient
 from faker import Factory
-from sqlalchemy.orm import Session
 
 sys.path = ['', '..'] + sys.path[1:]
-from commons.db.session import engine  # noqa
+from commons.db.session import engine, SessionLocal  # noqa
 from main import create_app  # noqa
 
 
@@ -25,20 +24,6 @@ def client() -> Generator:
 def faker() -> Generator:
     return Factory.create('pt_BR')
 
-
 @pytest.fixture(scope="session")
 def db() -> Generator:
-
-    connection = engine.connect()
-    # begin the nested transaction
-    transaction = connection.begin()
-    # use the connection with the already started transaction
-    session = Session(bind=connection)
-
-    yield session
-
-    session.close()
-    # roll back the broader transaction
-    transaction.rollback()
-    # put back the connection to the connection pool
-    connection.close()
+    yield SessionLocal()

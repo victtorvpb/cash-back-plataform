@@ -6,7 +6,7 @@ from commons.schemas.auth.user import UserCreate
 from commons import models, crud
 
 
-def create_random_user(db: Session) -> models.User:
+def create_random_user(db: Session) -> dict:
     faker = Factory.create('pt_BR')
     email = faker.email()
     cpf = faker.cpf()
@@ -17,4 +17,4 @@ def create_random_user(db: Session) -> models.User:
 
     user = crud.auth.user.user.create(db=db, obj_in=user_in)
 
-    return user
+    return {"user": user, "email": email, "cpf": cpf, "full_name": full_name, "password": password}
