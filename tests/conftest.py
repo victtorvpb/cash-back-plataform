@@ -24,6 +24,7 @@ def client() -> Generator:
 def faker() -> Generator:
     return Factory.create('pt_BR')
 
+
 @pytest.fixture(scope="session")
 def db() -> Generator:
     yield SessionLocal()

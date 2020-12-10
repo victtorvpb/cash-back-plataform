@@ -3,7 +3,7 @@ from faker import Factory
 
 
 from commons.schemas.auth.user import UserCreate
-from commons import models, crud
+from commons import crud
 
 
 def create_random_user(db: Session) -> dict:

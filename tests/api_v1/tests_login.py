@@ -1,5 +1,3 @@
-from typing import Dict
-
 from fastapi.testclient import TestClient
 from sqlalchemy.orm import Session
 
@@ -7,7 +5,7 @@ from commons.config import settings
 from tests.utils.user import create_random_user
 
 
-def test_get_access_token(db: Session,  client: TestClient) -> None:
+def test_get_access_token(db: Session, client: TestClient) -> None:
 
     dict_user = create_random_user(db)
     login_data = {
@@ -18,4 +16,3 @@ def test_get_access_token(db: Session,  client: TestClient) -> None:
     tokens = response.json()
     assert response.status_code == 200
     assert tokens.get('accessToken')
-
