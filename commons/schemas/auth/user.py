@@ -16,7 +16,7 @@ class UserCreate(UserBase):
     full_name: str
     email: EmailStr
     password: str
-    cpf: Optional[constr(max_length=14)]
+    cpf: constr(max_length=14)
 
 
 class UserInDBBase(SchemaInDBBase):

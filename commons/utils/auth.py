@@ -3,13 +3,14 @@ from fastapi.param_functions import Form
 
 
 class CustomOAuth2PasswordRequestForm(OAuth2PasswordRequestForm):
-    def __init__(self, username: str = Form(...), password: str = Form(...), scope: str = Form("")):
+    def __init__(self, email: str = Form(...), password: str = Form(...)):
 
+        self.email = email
         super().__init__(
             grant_type="password",
-            username=username,
+            username=self.email,
             password=password,
-            scope="",
+            scope="resellers",
             client_id=None,
             client_secret=None,
         )
