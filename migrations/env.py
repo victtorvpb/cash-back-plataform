@@ -22,7 +22,7 @@ fileConfig(config.config_file_name)
 # target_metadata = mymodel.Base.metadata
 
 sys.path = ['', '..'] + sys.path[1:]
-from db.base import SQLAlchemyBaseModel  # noqa
+from commons.db.base import SQLAlchemyBaseModel  # noqa
 
 target_metadata = SQLAlchemyBaseModel.metadata
 
