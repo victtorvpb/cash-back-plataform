@@ -26,6 +26,7 @@ def create_user(
             status_code=status.HTTP_409_CONFLICT,
             detail="The user with this email or cpf already exists in the system",
         )
+
     user = crud.user.create(db, obj_in=user_in)
 
     return user
