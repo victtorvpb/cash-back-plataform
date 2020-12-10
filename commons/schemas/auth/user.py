@@ -1,8 +1,9 @@
 from typing import Optional
+from uuid import UUID
 
 from pydantic import EmailStr, constr
 
-from commons.schemas.base import SchemaBase, SchemaInDBBase, UUID
+from commons.schemas.base import SchemaBase, SchemaInDBBase
 
 
 class UserBase(SchemaBase):
@@ -29,7 +30,3 @@ class UserInDBBase(SchemaInDBBase):
 
 class User(UserInDBBase):
     pass
-
-
-class UserInDB(SchemaInDBBase):
-    hashed_password: str
