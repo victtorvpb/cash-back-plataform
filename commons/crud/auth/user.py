@@ -31,7 +31,14 @@ class CRUDUser(CRUDBase[User, UserCreate]):
             return db.query(self.model).filter(self.model.email == email).first()
         except Exception:
             extra = {"email": email}
-            log.exception("get_by_email: Error to get user by EmailF", extra=extra)
+            log.exception("get_by_email: Error to get user by Email", extra=extra)
+    
+    def get_by_cpf(self, db: Session, cpf: str) -> Optional[User]:
+        try:
+            return db.query(self.model).filter(self.model.cpf == cpf).first()
+        except Exception:
+            extra = {"cpf": cpf}
+            log.exception("get_by_cpf: Error to get user by CPF", extra=extra)
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         try:

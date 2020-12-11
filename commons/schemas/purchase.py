@@ -1,26 +1,38 @@
 from typing import Optional
 from datetime import datetime
+from uuid import UUID
+from enum import Enum
 
 from pydantic import validator
 
-from commons.schemas.base import SchemaBase
+from commons.schemas.base import SchemaBase, SchemaInDBBase
 
 
-class PusrchaseBase(SchemaBase):
+class StatusEnum(str, Enum):
+    approved = "approved"
+    pending = "pending"
+
+class PurchaseBase(SchemaBase):
     code: Optional[str] = None
-    value: float = None
-    purchase_date: datetime = None
+    value: Optional[float] = None
+    purchase_date: Optional[datetime] = None
 
-
-class PusrchaseCreate(PusrchaseBase):
+class PurchaseCreate(PurchaseBase):
     code: str
     value: float
     purchase_date: datetime
-    status: str
+    cpf: str
 
-    @validator('status')
-    def check_status_in(cls, v):
-        if v in ('pending', 'valid'):
-            return v
 
-        raise ValueError("status in not valid")
+class PurchaseInDBBase(SchemaInDBBase):
+    code: Optional[str] = None
+    value: Optional[float] = None
+    purchase_date: datetime = None
+    uuid: Optional[UUID] = None
+    cashback_percente: Optional[float] = None
+    cashback_value: Optional[float] = None
+    status: Optional[StatusEnum] = StatusEnum.pending
+
+
+class Pusrchase(PurchaseInDBBase):
+    pass
