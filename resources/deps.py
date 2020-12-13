@@ -14,7 +14,8 @@ from commons.db.session import SessionLocal
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/login/access-token")
 
-log = logging.getLogger()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 def get_db() -> Generator:
@@ -32,7 +33,7 @@ def get_current_user(
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         token_data = schemas.TokenPayload(**payload)
     except (jwt.JWTError, ValidationError):
-        log.exception('get_current_user:could not validate credentials')
+        logger.exception('get_current_user:could not validate credentials')
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail='Could not validate credentials',
@@ -40,7 +41,7 @@ def get_current_user(
     user = crud.user.get(db, id=token_data.sub)
 
     if not user:
-        log.warning('get_current_user:user not found')
+        logger.warning('get_current_user:user not found')
 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
 

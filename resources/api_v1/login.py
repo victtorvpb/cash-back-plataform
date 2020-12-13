@@ -16,7 +16,8 @@ from resources import deps
 login_router = APIRouter()
 
 
-log = logging.getLogger()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 @login_router.post(
@@ -29,7 +30,7 @@ async def login_access_token(
     form_data: auth.CustomOAuth2PasswordRequestForm = Depends(),
 ) -> Any:
 
-    log.info(f"login_access_token: Login with access token for user {form_data.email,}")
+    logger.info(f"login_access_token: Login with access token for user {form_data.email,}")
     user = crud.user.authenticate(db, email=form_data.email, password=form_data.password)
 
     if not user:

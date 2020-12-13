@@ -6,7 +6,8 @@ from commons.crud.base import CRUDBase
 from commons.models.purchase import Purchase
 from commons.schemas.purchase import PurchaseCreate
 
-log = logging.getLogger()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
@@ -23,7 +24,7 @@ class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
 
             cashback_value, cashback_percente = self.calculate_purchase_percentil(obj_in.value)
 
-            log.info(f'create: Creating pursch with code {obj_in.code}', extra=extra)
+            logger.info(f'create: Creating pursch with code {obj_in.code}', extra=extra)
             db_obj = Purchase(
                 code=obj_in.code,
                 value=obj_in.value,
@@ -38,7 +39,7 @@ class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
             db.refresh(db_obj)
             return db_obj
         except Exception:
-            log.exception("create: Error on create user", extra=extra)
+            logger.exception("create: Error on create user", extra=extra)
             raise
 
     def get_purchase_by_code(self, db: Session, *, code: str, request_uuid: str) -> bool:
@@ -51,12 +52,10 @@ class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
 
         except Exception:
             extra = {"code": code, "request_uuid": request_uuid}
-            log.exception("get_purchase_by_code: erro on get purchase", extra=extra)
+            logger.exception("get_purchase_by_code: erro on get purchase", extra=extra)
 
     def calculate_purchase_percentil(self, value_purchase: float) -> tuple:
-        import pdb
 
-        pdb.set_trace()
         if 0 < value_purchase < 1000:
             return (value_purchase * 0.10, 10)
         elif 1000 <= value_purchase <= 1500:

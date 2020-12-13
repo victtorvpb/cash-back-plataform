@@ -36,3 +36,13 @@ class PurchaseInDBBase(SchemaInDBBase):
 
 class Pusrchase(PurchaseInDBBase):
     pass
+
+
+class PurcahseCredit(SchemaBase):
+    credit: int = None
+
+
+class PurchaseCreditRequest(SchemaBase):
+
+    statusCode: int
+    body: PurcahseCredit

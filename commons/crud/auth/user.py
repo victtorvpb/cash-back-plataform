@@ -11,7 +11,8 @@ from commons.crud.base import CRUDBase
 from commons.models.auth.user import User
 from commons.schemas.auth.user import UserCreate
 
-log = logging.getLogger()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class CRUDUser(CRUDBase[User, UserCreate]):
@@ -24,21 +25,21 @@ class CRUDUser(CRUDBase[User, UserCreate]):
             )
         except Exception:
             extra = {"email": email, "cpf": cpf}
-            log.exception("get_by_email_or_cpf: Error to get user by Email or CPF", extra=extra)
+            logger.exception("get_by_email_or_cpf: Error to get user by Email or CPF", extra=extra)
 
     def get_by_email(self, db: Session, email: EmailStr) -> Optional[User]:
         try:
             return db.query(self.model).filter(self.model.email == email).first()
         except Exception:
             extra = {"email": email}
-            log.exception("get_by_email: Error to get user by Email", extra=extra)
+            logger.exception("get_by_email: Error to get user by Email", extra=extra)
 
     def get_by_cpf(self, db: Session, cpf: str) -> Optional[User]:
         try:
             return db.query(self.model).filter(self.model.cpf == cpf).first()
         except Exception:
             extra = {"cpf": cpf}
-            log.exception("get_by_cpf: Error to get user by CPF", extra=extra)
+            logger.exception("get_by_cpf: Error to get user by CPF", extra=extra)
 
     def create(self, db: Session, *, obj_in: UserCreate) -> User:
         try:
@@ -53,7 +54,7 @@ class CRUDUser(CRUDBase[User, UserCreate]):
             db.refresh(db_obj)
             return db_obj
         except Exception:
-            log.exception("create: Error on create user")
+            logger.exception("create: Error on create user")
 
     def authenticate(self, db: Session, *, email: EmailStr, password: str):
         user = self.get_by_email(db, email=email)

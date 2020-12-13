@@ -13,6 +13,7 @@ class Settings(BaseSettings):
     PORT: int = 5000
     DEBUG: bool = True
     ALGORITHM: str = 'HS512'
+    CREDIT_SERVICE_TOKEN: str = 'ZXPURQOARHiMc6Y0flhRC1LVlZQVFRnm&#39'
 
     # Database
     SQLALCHEMY_DATABASE_URI: str = os.getenv('SQLALCHEMY_DATABASE_URI')

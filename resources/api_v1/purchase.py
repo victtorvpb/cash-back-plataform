@@ -9,7 +9,8 @@ from sqlalchemy.orm import Session
 from resources import deps
 from commons import schemas, crud
 
-log = logging.getLogger()
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 purchase_router = APIRouter()
 
@@ -34,7 +35,7 @@ def create_purchase(
     user = crud.user.get_by_cpf(db, puchase_in.cpf)
 
     if not user:
-        log.warning(f'create_purchase Not user in database with cpf {puchase_in.cpf}')
+        logger.warning(f'create_purchase Not user in database with cpf {puchase_in.cpf}')
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Not user with cpf",
@@ -71,6 +72,5 @@ def list_purchase(
     page: int = 0,
     # current_user: models.User = Depends(deps.get_current_active_user)
 ) -> Any:
-
     purchases = crud.purchase.get_multi(db, skip=page)
     return purchases
