@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from resources import deps
-from commons import schemas, crud, models
+from commons import schemas, crud
 
 log = logging.getLogger()
 
@@ -17,8 +17,10 @@ purchase_router = APIRouter()
 @purchase_router.post(
     '/purchase',
     response_model=schemas.Pusrchase,
-    responses= {status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException}},
+    responses={
+        status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException},
+    },
 )
 def create_purchase(
     *,
@@ -26,9 +28,9 @@ def create_purchase(
     puchase_in: schemas.PurchaseCreate,
     # current_user: models.User = Depends(deps.get_current_active_user)
 ) -> Any:
-    
+
     request_uuid = str(uuid4())
-    
+
     user = crud.user.get_by_cpf(db, puchase_in.cpf)
 
     if not user:
@@ -38,7 +40,9 @@ def create_purchase(
             detail="Not user with cpf",
         )
 
-    purchase_in_bd = crud.purchase.get_purchase_by_code(db, code=puchase_in.code, request_uuid=request_uuid)
+    purchase_in_bd = crud.purchase.get_purchase_by_code(
+        db, code=puchase_in.code, request_uuid=request_uuid
+    )
 
     if purchase_in_bd:
         raise HTTPException(
@@ -46,8 +50,9 @@ def create_purchase(
             detail=f"Purchase with code {puchase_in.code} exist in db",
         )
 
-    
-    purchase = crud.purchase.create(db, obj_in=puchase_in, user_id= user.id, request_uuid=request_uuid)
+    purchase = crud.purchase.create(
+        db, obj_in=puchase_in, user_id=user.id, request_uuid=request_uuid
+    )
 
     return purchase
 
@@ -55,13 +60,15 @@ def create_purchase(
 @purchase_router.get(
     '/purchase',
     response_model=List[schemas.Pusrchase],
-    responses= {status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
-    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException}},
+    responses={
+        status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException},
+    },
 )
 def list_purchase(
     *,
     db: Session = Depends(deps.get_db),
-    page: int =0,
+    page: int = 0,
     # current_user: models.User = Depends(deps.get_current_active_user)
 ) -> Any:
 

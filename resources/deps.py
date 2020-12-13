@@ -16,6 +16,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl=f"{settings.API_V1_STR}/login/acce
 
 log = logging.getLogger()
 
+
 def get_db() -> Generator:
     try:
         db: Session = SessionLocal()

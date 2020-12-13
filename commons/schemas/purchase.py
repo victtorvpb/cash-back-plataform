@@ -3,8 +3,6 @@ from datetime import datetime
 from uuid import UUID
 from enum import Enum
 
-from pydantic import validator
-
 from commons.schemas.base import SchemaBase, SchemaInDBBase
 
 
@@ -12,10 +10,12 @@ class StatusEnum(str, Enum):
     approved = "approved"
     pending = "pending"
 
+
 class PurchaseBase(SchemaBase):
     code: Optional[str] = None
     value: Optional[float] = None
     purchase_date: Optional[datetime] = None
+
 
 class PurchaseCreate(PurchaseBase):
     code: str
