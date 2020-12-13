@@ -1,13 +1,13 @@
 import logging
-from uuid import uuid4
 
-from typing import Any
+from uuid import uuid4
+from typing import Any, List
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from resources import deps
-from commons import schemas, crud
+from commons import schemas, crud, models
 
 log = logging.getLogger()
 
@@ -24,6 +24,7 @@ def create_purchase(
     *,
     db: Session = Depends(deps.get_db),
     puchase_in: schemas.PurchaseCreate,
+    # current_user: models.User = Depends(deps.get_current_active_user)
 ) -> Any:
     
     request_uuid = str(uuid4())
@@ -49,3 +50,20 @@ def create_purchase(
     purchase = crud.purchase.create(db, obj_in=puchase_in, user_id= user.id, request_uuid=request_uuid)
 
     return purchase
+
+
+@purchase_router.get(
+    '/purchase',
+    response_model=List[schemas.Pusrchase],
+    responses= {status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
+    status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException}},
+)
+def list_purchase(
+    *,
+    db: Session = Depends(deps.get_db),
+    page: int =0,
+    # current_user: models.User = Depends(deps.get_current_active_user)
+) -> Any:
+
+    purchases = crud.purchase.get_multi(db, skip=page)
+    return purchases
