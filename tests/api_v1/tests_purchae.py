@@ -29,7 +29,7 @@ def test_post_new_purchase(
     dict_user = create_random_user(db)
     user = dict_user.get('user')
     code = faker.word()
-    value = 999
+    value = value_purchase
     purchase_date = datetime.now().isoformat()
     cpf = user.cpf
     data = {"code": code, "value": value, "purchase_date": purchase_date, "cpf": cpf}
@@ -44,5 +44,5 @@ def test_post_new_purchase(
     purchase = crud.purchase.get_purchase_by_code(db, code=code, request_uuid=request_uuid)
     assert schemas.Pusrchase.parse_obj(created_purchase)
     assert purchase
-    assert float(purchase.cashback_percente) == 10
-    assert float(purchase.cashback_value) == value * 0.1
+    assert float(purchase.cashback_percente) == percente_cashback
+    assert float(purchase.cashback_value) == value * (percente_cashback/100)
