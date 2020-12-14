@@ -3,8 +3,9 @@ DOCKER_COMPOSE=docker-compose.yml
 SUDO=sudo
 CONTAINER_NAME=cash_back_plataform
 
-install:
-	$(info ************  Not command ************)
+install: build start
+	make exec COMMAND="python initial_data.py"
+	
 build:
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
 
