@@ -15,4 +15,4 @@ def test_get_access_token(db: Session, client: TestClient) -> None:
     response = client.post(f"{settings.API_V1_STR}/login/access-token", data=login_data)
     tokens = response.json()
     assert response.status_code == 200
-    assert tokens.get('accessToken')
+    assert tokens.get('access_token')

@@ -30,6 +30,7 @@ def get_current_user(
     db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)
 ) -> models.User:
     try:
+
         payload = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         token_data = schemas.TokenPayload(**payload)
     except (jwt.JWTError, ValidationError):
@@ -46,11 +47,3 @@ def get_current_user(
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='User not found')
 
     return user
-
-
-def get_current_active_user(
-    current_user: models.User = Depends(get_current_user),
-) -> models.User:
-    if not crud.user.is_active(current_user):
-        raise HTTPException(status_code=400, detail="Inactive user")
-    return current_user
