@@ -26,6 +26,9 @@ pep8:
 test:
 	make exec COMMAND="pytest"
 
-formatter: pep8
+formatter:
 	make exec COMMAND="black . -S -v -t py38 --exclude '\alembic/' -l 100 "
-	# make pep8
+	make pep8
+
+migrate:
+	make exec COMMAND="alembic upgrade heads"
