@@ -8,7 +8,7 @@ from sqlalchemy.orm import Session
 import logging
 
 from commons.config import settings
-from commons.utils import security, auth
+from commons.utils import security
 from commons import schemas
 from commons import crud
 from resources import deps

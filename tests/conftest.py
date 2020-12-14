@@ -9,17 +9,17 @@ from faker import Factory
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-sys.path = ['', '..'] + sys.path[1:]
-from commons.db.base import SQLAlchemyBaseModel
-from main import create_app
-from resources.deps import get_db
+sys.path = ['', '..'] + sys.path[1:]  # noqa:E402
+from commons.db.base import SQLAlchemyBaseModel  # noqa:E402
+from main import create_app  # noqa:E402
+from resources.deps import get_db  # noqa:E402
 
 
+SQLALCHEMY_DATABASE_URL = (
+    "postgresql+psycopg2://tom:tom123@service.postgres:5432/cashback_postgres_test"
+)
 
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg2://tom:tom123@service.postgres:5432/cashback_postgres_test"
-
-engine = create_engine(
-    SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
+engine = create_engine(SQLALCHEMY_DATABASE_URL, pool_pre_ping=True)
 
 TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -37,6 +37,7 @@ def override_get_db():
 
 app = create_app()
 app.dependency_overrides[get_db] = override_get_db
+
 
 @pytest.fixture(scope="module")
 def client() -> Generator:

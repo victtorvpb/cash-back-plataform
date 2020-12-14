@@ -23,7 +23,7 @@ install-requirements:
 pep8:
 	make exec COMMAND="flake8 . --exit-zero"
 
-test: #setup_test
+test: setup_test
 	make exec COMMAND="pytest --cov=. --cov-config .coveragerc"
 	make exec COMMAND="coverage html"
 
@@ -38,3 +38,6 @@ setup_test: start
 	make exec CONTAINER_NAME="service.postgres" COMMAND='psql -U tom -d postgres -c "DROP DATABASE IF EXISTS cashback_postgres_test;"'
 	make exec CONTAINER_NAME="service.postgres" COMMAND="psql -U tom -d postgres -c 'CREATE DATABASE  cashback_postgres_test;'"
 	make exec  COMMAND="alembic --name tests upgrade heads"
+
+install-git:
+	make exec COMMAND="apt-get install git -y"
