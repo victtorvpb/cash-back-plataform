@@ -11,7 +11,6 @@
 
 ## Install project
 
-Run the code
 
     make install
 
