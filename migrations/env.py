@@ -34,10 +34,8 @@ target_metadata = SQLAlchemyBaseModel.metadata
 
 
 def get_url():
-    user = os.getenv("DATABASE_USER", "postgres")
-    password = os.getenv("DATABASE_PASSWORD", "postgres")
-    server = os.getenv("DATABASE_HOST", "localhost")
-    port = os.getenv("DATABASE_PORT", "5432")
+    if config.get_main_option("sqlalchemy.url"):
+        return config.get_main_option("sqlalchemy.url")
     postgres_url = os.getenv("SQLALCHEMY_DATABASE_URI")
     return postgres_url
 
