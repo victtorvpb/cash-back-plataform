@@ -38,8 +38,8 @@ def test_post_new_purchase(
 
     headers = user_authentication_headers(client, user.email, dict_user.get('password'))
     response = client.post(f"{settings.API_V1_STR}/purchase", json=data, headers=headers)
-
-    assert 200 <= response.status_code < 300
+    
+    assert status.HTTP_200_OK == response.status_code
 
     created_purchase = response.json()
     request_uuid = str(uuid4())

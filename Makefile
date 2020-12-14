@@ -40,4 +40,5 @@ setup_test: start
 	make exec  COMMAND="alembic --name tests upgrade heads"
 
 coverage: test
+	make exec COMMAND="apt install curl -y"
 	bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml
