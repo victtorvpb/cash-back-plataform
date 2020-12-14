@@ -23,8 +23,9 @@ install-requirements:
 pep8:
 	make exec COMMAND="flake8 . --exit-zero"
 
-test: setup_test
-	make exec COMMAND="pytest"
+test: #setup_test
+	make exec COMMAND="pytest --cov=. --cov-config .coveragerc"
+	make exec COMMAND="coverage html"
 
 formatter:
 	make exec COMMAND="black . -S -v -t py38 --exclude '\alembic/' -l 100 "
