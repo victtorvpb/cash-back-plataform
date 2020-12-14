@@ -4,6 +4,8 @@ omit = */tests/*,
         *__init__.py,
         migrations/*
         main.py
+        initial_data.py
+        commons/db/init_db.py
 
 
 [report]
@@ -11,4 +13,6 @@ omit = */tests/*,
         *__init__.py,
         migrations/*
         main.py
+        initial_data.py
+        commons/db/init_db.py
 
