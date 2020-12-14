@@ -38,7 +38,7 @@ def get_credit_value(cpf: str) -> Any:
             return response_data.body
 
         except ValidationError:
-            pass
+            logger.exception("Error to validate", extra=extra)
 
     except requests.HTTPError:
         extra['status_code'] = response.status_code
