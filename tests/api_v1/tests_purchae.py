@@ -19,6 +19,7 @@ values_to_new_purchase = {
     (1001, 15),
     (1500, 15),
     (1501, 20),
+    (-1, 0),
 }
 
 
@@ -71,7 +72,6 @@ def test_get_credit_whitout_user(
 
     dict_user = create_random_user(db)
     user = dict_user.get('user')
-    cpf = user.cpf
  
     headers = user_authentication_headers(client, user.email, dict_user.get('password'))
     response = client.get(f"{settings.API_V1_STR}/credit-delear?reseller_cpf=teste", headers=headers)
