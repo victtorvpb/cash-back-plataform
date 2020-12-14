@@ -7,6 +7,3 @@ class Message(PydanticBase):
 
 class HTTPException(PydanticBase):
     detail: str
-
-    class Config:
-        stitle = 'asdasda'

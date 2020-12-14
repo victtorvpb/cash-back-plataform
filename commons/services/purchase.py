@@ -5,7 +5,7 @@ from typing import Any
 
 from pydantic import ValidationError
 
-from schemas import PurchaseCreditRequest
+from commons.schemas import PurchaseCreditRequest
 from commons.config import settings
 
 logging.basicConfig(level=logging.INFO)
@@ -18,14 +18,13 @@ def get_credit_value(cpf: str) -> Any:
     heardes = {"token": settings.CREDIT_SERVICE_TOKEN}
 
     cpf = cpf.replace('.', '').replace('-', '')
-    url = 'https://mdaqk8ek5j.execute-api.us-east-1.amazonaws.com/v1/cashback?cpf={cpf}'
+    url = f'https://mdaqk8ek5j.execute-api.us-east-1.amazonaws.com/v1/cashback?cpf={cpf}'
 
     try:
-        response = requests.get(url=url, heders=heardes)
+        response = requests.get(url=url, headers=heardes)
         response.raise_for_status()
 
         response.json()
-
         try:
             response_data = PurchaseCreditRequest.parse_obj(response.json())
             if response_data.statusCode != 200:

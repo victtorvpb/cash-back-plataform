@@ -7,7 +7,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
 from resources import deps
-from commons import schemas, crud
+from commons import schemas, crud, services
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -74,3 +74,34 @@ def list_purchase(
 ) -> Any:
     purchases = crud.purchase.get_multi(db, skip=page)
     return purchases
+
+
+@purchase_router.get(
+    '/credit-delear',
+    response_model=schemas.PurcahseCredit,
+    responses={
+        status.HTTP_400_BAD_REQUEST: {"model": schemas.HTTPException},
+        status.HTTP_500_INTERNAL_SERVER_ERROR: {"model": schemas.HTTPException},
+    },
+)
+def reseller_credit(
+    *,
+    db: Session = Depends(deps.get_db),
+    reseller_cpf: str,
+    # current_user: models.User = Depends(deps.get_current_active_user)
+) -> Any:
+    user = crud.user.get_by_cpf(db, reseller_cpf)
+
+    if not user:
+        logger.warning(f'create_purchase Not user in database with cpf {reseller_cpf}')
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Not user with cpf",
+        )
+    reseller_credit = services.get_credit_value(reseller_cpf)
+    if reseller_credit:
+        return reseller_credit
+
+    raise HTTPException(
+        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail="Not possible get delear credit"
+    )
