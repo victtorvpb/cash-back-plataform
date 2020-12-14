@@ -25,8 +25,7 @@ pep8:
 	make exec COMMAND="flake8 . --exit-zero"
 
 test: setup_test
-	make exec COMMAND="pytest --cov=. --cov-config .coveragerc"
-	make exec COMMAND="coverage html"
+	make exec COMMAND="pytest --cov=. --cov-config .coveragerc --cov-report xml"
 
 formatter:
 	make exec COMMAND="black . -S -v -t py38 --exclude '\alembic/' -l 100 "
@@ -40,3 +39,5 @@ setup_test: start
 	make exec CONTAINER_NAME="service.postgres" COMMAND="psql -U tom -d postgres -c 'CREATE DATABASE  cashback_postgres_test;'"
 	make exec  COMMAND="alembic --name tests upgrade heads"
 
+coverage: test
+	bash <(curl -Ls https://coverage.codacy.com/get.sh) report -r coverage.xml

@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   cash_back_plataform:
@@ -10,7 +10,7 @@ services:
     build:
       context: .
     environment:
-      - SQLALCHEMY_DATABASE_URI=${SQLALCHEMY_DATABASE_URI}
+      - SQLALCHEMY_DATABASE_URI=postgresql+psycopg2://tom:tom123@service.postgres:5432/cashback_postgres
     volumes:
       - ./:/opt/app/cash_back_plataform/
     external_links:
@@ -30,6 +30,5 @@ services:
       - POSTGRES_PASSWORD=tom123
       - POSTGRES_DB=cashback_postgres
 
-
 volumes:
-    postgre-data-test:
+  postgre-data-test:

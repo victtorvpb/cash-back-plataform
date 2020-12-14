@@ -15,6 +15,5 @@ before_install:
 script:
   - make build
   - make start
-  - make test
-
+  - make coverage
   - make pep8
