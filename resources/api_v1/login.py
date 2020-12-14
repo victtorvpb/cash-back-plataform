@@ -2,6 +2,7 @@ from datetime import timedelta
 from typing import Any
 
 from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
 import logging
@@ -27,11 +28,11 @@ logger = logging.getLogger(__name__)
 )
 async def login_access_token(
     db: Session = Depends(deps.get_db),
-    form_data: auth.CustomOAuth2PasswordRequestForm = Depends(),
+    form_data: OAuth2PasswordRequestForm = Depends(),
 ) -> Any:
 
-    logger.info(f"login_access_token: Login with access token for user {form_data.email,}")
-    user = crud.user.authenticate(db, email=form_data.email, password=form_data.password)
+    logger.info(f"login_access_token: Login with access token for user {form_data.username,}")
+    user = crud.user.authenticate(db, email=form_data.username, password=form_data.password)
 
     if not user:
         raise HTTPException(
