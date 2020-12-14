@@ -5,7 +5,7 @@ import mock
 from fastapi import status
 
 from commons.services.purchase import get_credit_value
-from tests.conftest import mock_response
+from tests.utils.utils import mock_response
 
 
 @mock.patch('commons.services.purchase.requests.get')

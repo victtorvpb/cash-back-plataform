@@ -46,7 +46,7 @@ class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
         try:
             purchase = db.query(self.model).filter(self.model.code == code).first()
             if purchase:
-                return True
+                return purchase
 
             return False
 
