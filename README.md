@@ -11,7 +11,6 @@
 
 ## Install project
 
-
     make install
 
 ## Execute the project
