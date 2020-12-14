@@ -8,7 +8,7 @@ from commons import crud
 from commons.config import settings
 
 
-def test_create_user_new_email(db: Session, client: TestClient, faker: Generator) -> None:
+def test_create_new_user(db: Session, client: TestClient, faker: Generator) -> None:
     email = faker.email()
     cpf = faker.cpf()
     password = faker.password()
