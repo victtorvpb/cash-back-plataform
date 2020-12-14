@@ -25,7 +25,9 @@ or
 ### Documentation
 
 http://localhost:5000/doc
+
 User default: admin@admin.com
+
 Password default: admin
 
 ### Run tests
