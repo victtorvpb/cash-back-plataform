@@ -8,6 +8,7 @@ from sqlalchemy.orm import Session
 
 from resources import deps
 from commons import schemas, crud, services, models
+from commons.utils.format import format_cpf
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -90,6 +91,8 @@ def reseller_credit(
     reseller_cpf: str,
     current_user: models.User = Depends(deps.get_current_user),
 ) -> Any:
+
+    reseller_cpf = format_cpf(reseller_cpf)
     user = crud.user.get_by_cpf(db, reseller_cpf)
 
     if not user:

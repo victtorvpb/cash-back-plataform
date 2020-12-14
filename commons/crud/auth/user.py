@@ -10,6 +10,7 @@ from commons.utils.security import get_password, verify_password
 from commons.crud.base import CRUDBase
 from commons.models.auth.user import User
 from commons.schemas.auth.user import UserCreate
+from commons.utils.format import format_cpf
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -20,7 +21,7 @@ class CRUDUser(CRUDBase[User, UserCreate]):
         try:
             return (
                 db.query(self.model)
-                .filter(or_(self.model.email == email, self.model.cpf == cpf))
+                .filter(or_(self.model.email == email, self.model.cpf == format_cpf(cpf)))
                 .first()
             )
         except Exception:
@@ -47,7 +48,7 @@ class CRUDUser(CRUDBase[User, UserCreate]):
                 full_name=obj_in.full_name,
                 email=obj_in.email,
                 hashed_password=get_password(obj_in.password),
-                cpf=obj_in.cpf,
+                cpf=format_cpf(obj_in.cpf),
             )
             db.add(db_obj)
             db.commit()

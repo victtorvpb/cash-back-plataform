@@ -20,7 +20,6 @@ def create_user(
     db: Session = Depends(deps.get_db),
     user_in: schemas.UserCreate,
 ) -> Any:
-
     if crud.user.get_by_email_or_cpf(db, user_in.email, user_in.cpf):
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,

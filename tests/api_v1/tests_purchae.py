@@ -45,4 +45,4 @@ def test_post_new_purchase(
     assert schemas.Pusrchase.parse_obj(created_purchase)
     assert purchase
     assert float(purchase.cashback_percente) == percente_cashback
-    assert float(purchase.cashback_value) == value * (percente_cashback/100)
+    assert float(purchase.cashback_value) == value * (percente_cashback / 100)

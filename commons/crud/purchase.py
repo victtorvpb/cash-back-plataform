@@ -17,7 +17,7 @@ class CRUDPurchase(CRUDBase[Purchase, PurchaseCreate]):
 
         try:
             extra = {"code": obj_in.code, "request_uuid": request_uuid}
-            if obj_in.cpf == '153.509.460-56':
+            if obj_in.cpf == '15350946056':
                 status = 'approved'
             else:
                 status = 'pending'
