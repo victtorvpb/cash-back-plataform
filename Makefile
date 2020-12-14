@@ -5,7 +5,7 @@ CONTAINER_NAME=cash_back_plataform
 
 install: build start
 	make exec COMMAND="python initial_data.py"
-	
+
 build:
 	docker-compose -f $(DOCKER_COMPOSE) build --force-rm --no-cache ${CONTAINER_NAME}
 
@@ -40,5 +40,3 @@ setup_test: start
 	make exec CONTAINER_NAME="service.postgres" COMMAND="psql -U tom -d postgres -c 'CREATE DATABASE  cashback_postgres_test;'"
 	make exec  COMMAND="alembic --name tests upgrade heads"
 
-install-git:
-	make exec COMMAND="apt-get install git -y"

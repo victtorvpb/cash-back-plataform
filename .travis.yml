@@ -16,6 +16,5 @@ script:
   - make build
   - make start
   - make test
-  # - make install-git
-  # - make coverage
+
   - make pep8
