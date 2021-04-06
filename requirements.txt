@@ -60,7 +60,7 @@ toml==0.10.2
 tox==3.20.1
 typed-ast==1.4.1
 typing-extensions==3.7.4.3
-urllib3==1.26.2
+urllib3==1.26.4
 uvicorn==0.12.3
 validate-docbr==1.8.2
 virtualenv==20.2.2
