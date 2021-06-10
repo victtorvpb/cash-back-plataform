@@ -15,7 +15,7 @@ dnspython==2.0.0
 ecdsa==0.14.1
 email-validator==1.1.2
 Faker==5.0.1
-fastapi==0.62.0
+fastapi==0.65.2
 filelock==3.0.12
 flake8==3.8.4
 h11==0.11.0
